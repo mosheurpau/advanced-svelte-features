@@ -2,17 +2,39 @@
   import Button from "./components/MyButton.svelte";
   import { countStore } from "./stores/writableStore.js";
   import { time } from "./stores/readableStore";
+  import { setContext } from "svelte";
+  import Child from "./components/Child.svelte";
   let countsNumer = 0;
 
   // Writable Store
   function increment() {
     countStore.update((n) => n + 2);
   }
+
+  // Context API for Passing Data Between Components
+  const users = [
+    {
+      name: "John Doe",
+      age: 30,
+    },
+    {
+      name: "Mohn Moe",
+      age: 35,
+    },
+    {
+      name: "Nohn Noe",
+      age: 40,
+    },
+  ];
+
+  // Providing Context
+  setContext("userData", users);
 </script>
 
-<h2>Creating Reusable Components</h2>
+<h1>Advanced Svelte Features</h1>
+
+<h2>----- Creating Reusable Components -----</h2>
 <p>{countsNumer}</p>
-<!-- Ensure the parent component properly listens for the myEvent and updates the count state. -->
 <Button on:myEvent={() => countsNumer++} text="Increment Button" />
 <Button on:myEvent={() => countsNumer--} text="Decrement Button" />
 <Button text="Test" />
@@ -31,3 +53,8 @@
 <h3>2. Readable Store</h3>
 <p>Current time: {$time}</p>
 <p>Current time: {$time.toLocaleTimeString()}</p>
+
+<br /><br /><br />
+
+<h2>------- Context API for Passing Data Between Components ------</h2>
+<Child />
